@@ -1,0 +1,120 @@
+<!doctype html>
+<meta charset="utf-8">
+
+<style>
+    @font-face {
+        font-family: 'Input Mono';
+        src: url(input_mono_regular.ttf);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Input Mono';
+        font-size: 26px;
+        margin: 0;
+    }
+
+    h1 {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    section {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+        left: 0;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        transition: opacity .3s;
+        width: 100vw;
+        z-index: -1;
+    }
+
+    section * {
+        max-width: 800px;
+    }
+
+    ul {
+        line-height: 2;
+    }
+
+    .current {
+        opacity: 1;
+        z-index: 0;
+    }
+
+    .full-width * {
+        max-width: none;
+    }
+
+    .image-bg {
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+</style>
+
+<title>Making a presentation with HTML & JavaScript</title>
+
+<body>
+    <section>
+        <h1>Making a presentation<br>with HTML & JavaScript</h1>
+    </section>
+
+    <section>
+        <h1>Why?</h1>
+        <ul>
+            <li>It's free</li>
+            <li>It can do everything you really need (and possibly more)</li>
+            <li>It's fun (for certain values of fun)</li>
+        </ul>
+    </section>
+
+    <section class="image-bg full-width" style="background-image: url('atuan.jpeg');">
+        <blockquote style="background: hsla(0, 0%, 95%, .9); padding: 5rem; border-radius: 3px; border: 5px solid white;">
+            “Real stupidity beats artificial intelligence every time”
+        </blockquote>
+    </section>
+
+    <section>
+        <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/D6_I9CDKiAg" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+    </section>
+
+    <section>
+        <h1>The End</h1>
+    </section>
+
+    <script>
+        window.onload = showFirst;
+        document.body.onclick = () => { showSection('next'); };
+        document.body.onkeydown = (event) => {
+            if (['ArrowRight', ' '].includes(event.key)) showSection('next');
+            if (event.key === 'ArrowLeft') showSection('previous');
+            if (event.key === 'h') showFirst();
+        };
+
+        function showSection(dir) {
+            const el = document.querySelector('.current');
+            const newEl = el[`${dir}ElementSibling`];
+            if (newEl !== null && newEl.tagName === 'SECTION') {
+                el.classList.remove('current');
+                newEl.classList.add('current');
+            }
+        }
+
+        function showFirst() {
+            for (_ of document.querySelectorAll('section')) {
+                _.classList.remove('current');
+            }
+            document.querySelector('section').classList.add('current');
+        }
+    </script>
+</body>
